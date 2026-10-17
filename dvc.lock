@@ -1,0 +1,71 @@
+schema: '2.0'
+stages:
+  preparer:
+    cmd: python src/preparer.py
+    deps:
+    - path: data/transactions.csv
+      hash: md5
+      md5: 22ec7bf426bc518b003d4e28906f6076
+      size: 85389
+    - path: src/preparer.py
+      hash: md5
+      md5: fdf244ca229e0bce9c340708111d0a22
+      size: 559
+    params:
+      params.yaml:
+        preparation.random_state: 42
+        preparation.test_size: 0.2
+    outs:
+    - path: data/prepare/test.csv
+      hash: md5
+      md5: 432db7ff9f808a3711a730550c9adf91
+      size: 17126
+    - path: data/prepare/train.csv
+      hash: md5
+      md5: 7e48daacf3215200ceff08b7bdbb92f4
+      size: 68304
+  entrainer:
+    cmd: python src/entrainer.py
+    deps:
+    - path: data/prepare/train.csv
+      hash: md5
+      md5: 7e48daacf3215200ceff08b7bdbb92f4
+      size: 68304
+    - path: src/entrainer.py
+      hash: md5
+      md5: 908fa7afaa5a01fe06db779d3a02b69e
+      size: 590
+    params:
+      params.yaml:
+        entrainement.max_depth: 12
+        entrainement.n_estimators: 100
+        entrainement.random_state: 42
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 5f58e548b2b5bd301d237d3b038747dd
+      size: 3053881
+  evaluer:
+    cmd: python src/evaluer.py
+    deps:
+    - path: data/prepare/test.csv
+      hash: md5
+      md5: 432db7ff9f808a3711a730550c9adf91
+      size: 17126
+    - path: models/model.pkl
+      hash: md5
+      md5: 5f58e548b2b5bd301d237d3b038747dd
+      size: 3053881
+    - path: src/evaluer.py
+      hash: md5
+      md5: cc29f238e71f4ffee8cab4e5a36dd91e
+      size: 927
+    outs:
+    - path: reports/confusion.png
+      hash: md5
+      md5: 32fb04f5b2746aa751950d242961014d
+      size: 14966
+    - path: reports/metrics.json
+      hash: md5
+      md5: 64d20d14a24ed20e03e3fe296cc41cdb
+      size: 87
