@@ -37,14 +37,14 @@ stages:
       size: 590
     params:
       params.yaml:
-        entrainement.max_depth: 12
+        entrainement.max_depth: 8
         entrainement.n_estimators: 100
         entrainement.random_state: 42
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: 5f58e548b2b5bd301d237d3b038747dd
-      size: 3053881
+      md5: 02af3432771b9adf1bfbec99d5515ec2
+      size: 1770201
   evaluer:
     cmd: python src/evaluer.py
     deps:
@@ -54,8 +54,8 @@ stages:
       size: 17126
     - path: models/model.pkl
       hash: md5
-      md5: 5f58e548b2b5bd301d237d3b038747dd
-      size: 3053881
+      md5: 02af3432771b9adf1bfbec99d5515ec2
+      size: 1770201
     - path: src/evaluer.py
       hash: md5
       md5: cc29f238e71f4ffee8cab4e5a36dd91e
@@ -63,9 +63,9 @@ stages:
     outs:
     - path: reports/confusion.png
       hash: md5
-      md5: 32fb04f5b2746aa751950d242961014d
-      size: 14966
+      md5: f36ce6bc27b4987913f42eff00530eb2
+      size: 15193
     - path: reports/metrics.json
       hash: md5
-      md5: 64d20d14a24ed20e03e3fe296cc41cdb
-      size: 87
+      md5: f22c305d87af017b05bdf14fc4c916ed
+      size: 85
