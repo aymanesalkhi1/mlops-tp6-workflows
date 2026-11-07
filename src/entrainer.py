@@ -1,20 +1,16 @@
+import os
+import yaml
 import joblib
 import pandas as pd
-import yaml
 from sklearn.ensemble import RandomForestClassifier
 
-params = yaml.safe_load(open('params.yaml', encoding='utf-8'))['entrainement']
-
+p = yaml.safe_load(open('params.yaml', encoding='utf-8'))['entrainement']
 train = pd.read_csv('data/prepare/train.csv')
-X_train = train.drop(columns=['fraude'])
-y_train = train['fraude']
+X, y = train.drop(columns='fraude'), train['fraude']
+modele = RandomForestClassifier(n_estimators=p['n_estimators'],
+                                max_depth=p['max_depth'],
+                                random_state=p['random_state']).fit(X, y)
 
-model = RandomForestClassifier(
-    n_estimators=params['n_estimators'],
-    max_depth=params['max_depth'],
-    random_state=params['random_state']
-)
-model.fit(X_train, y_train)
-
-joblib.dump(model, 'models/model.pkl')
-print('Modele entraine et sauvegarde dans models/model.pkl')
+os.makedirs('models', exist_ok=True)
+joblib.dump(modele, 'models/model.pkl')
+print('entrainement : modele ecrit dans models/model.pkl')

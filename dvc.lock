@@ -5,67 +5,67 @@ stages:
     deps:
     - path: data/transactions.csv
       hash: md5
-      md5: 22ec7bf426bc518b003d4e28906f6076
-      size: 85389
+      md5: 4979f8c49faba1e1f63196b880815820
+      size: 113403
     - path: src/preparer.py
       hash: md5
-      md5: fdf244ca229e0bce9c340708111d0a22
-      size: 559
+      md5: ac99c50276204d2d239808a174eb4b37
+      size: 561
     params:
       params.yaml:
         preparation.random_state: 42
-        preparation.test_size: 0.2
+        preparation.test_size: 0.25
     outs:
     - path: data/prepare/test.csv
       hash: md5
-      md5: 432db7ff9f808a3711a730550c9adf91
-      size: 17126
+      md5: 9248f36f884983bae09734d5e9fa4afc
+      size: 28440
     - path: data/prepare/train.csv
       hash: md5
-      md5: 7e48daacf3215200ceff08b7bdbb92f4
-      size: 68304
+      md5: 372147b3f3d44c367c72237196f504fd
+      size: 85003
   entrainer:
     cmd: python src/entrainer.py
     deps:
     - path: data/prepare/train.csv
       hash: md5
-      md5: 7e48daacf3215200ceff08b7bdbb92f4
-      size: 68304
+      md5: 372147b3f3d44c367c72237196f504fd
+      size: 85003
     - path: src/entrainer.py
       hash: md5
-      md5: 908fa7afaa5a01fe06db779d3a02b69e
-      size: 590
+      md5: 02a3a7c99504db52fdbb63612de18bb4
+      size: 615
     params:
       params.yaml:
-        entrainement.max_depth: 8
-        entrainement.n_estimators: 100
+        entrainement.max_depth: 12
+        entrainement.n_estimators: 300
         entrainement.random_state: 42
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: 02af3432771b9adf1bfbec99d5515ec2
-      size: 1770201
+      md5: aa5a76815781049aafa3f5bccf4b9d66
+      size: 11316953
   evaluer:
     cmd: python src/evaluer.py
     deps:
     - path: data/prepare/test.csv
       hash: md5
-      md5: 432db7ff9f808a3711a730550c9adf91
-      size: 17126
+      md5: 9248f36f884983bae09734d5e9fa4afc
+      size: 28440
     - path: models/model.pkl
       hash: md5
-      md5: 02af3432771b9adf1bfbec99d5515ec2
-      size: 1770201
+      md5: aa5a76815781049aafa3f5bccf4b9d66
+      size: 11316953
     - path: src/evaluer.py
       hash: md5
-      md5: cc29f238e71f4ffee8cab4e5a36dd91e
-      size: 927
+      md5: e5e998c21d7bdf1b90bef0c1a3bfdafe
+      size: 809
     outs:
     - path: reports/confusion.png
       hash: md5
-      md5: f36ce6bc27b4987913f42eff00530eb2
-      size: 15193
+      md5: da97dbf34871620c8fc95338132bf120
+      size: 16469
     - path: reports/metrics.json
       hash: md5
-      md5: f22c305d87af017b05bdf14fc4c916ed
-      size: 85
+      md5: ac489100e2e656999316013d26c7a480
+      size: 61
