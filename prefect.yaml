@@ -1,0 +1,29 @@
+---
+# Deploiement du workflow de reentrainement fraude.
+# Le code reste sur la machine : pas de clone Git distant.
+name: tp6-workflows
+prefect-version: 3.9.2
+
+build: null
+push: null
+
+pull:
+- prefect.deployments.steps.set_working_directory:
+    directory: /home/ubuntu/Documents/mlops-workspace/tp6-workflows
+
+deployments:
+- name: hebdomadaire-pool
+  version: null
+  tags: []
+  concurrency_limit: null
+  description: Reentrainement hebdomadaire du modele de fraude, execute par le work pool pool-tp.
+  entrypoint: flow_mlops.py:reentrainement
+  parameters: {}
+  work_pool:
+    name: pool-tp
+    work_queue_name: null
+    job_variables: {}
+  schedules:
+  - cron: 0 6 * * 1
+    timezone: Africa/Casablanca
+    active: true
